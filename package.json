@@ -16,7 +16,7 @@
     "@mui/material": "^5.14.16",
     "@reduxjs/toolkit": "^1.9.7",
     "antd": "^5.10.3",
-    "axios": "^1.6.0",
+    "axios": "^1.6.2",
     "cookies-next": "^4.0.0",
     "formik": "^2.4.5",
     "jwt-decode": "^4.0.0",

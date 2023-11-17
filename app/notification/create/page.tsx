@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import BrowseImage from "@/components/BrowseMedia";
 import io from "socket.io-client";
-const socket = io("https://fpt-blog-be-production.up.railway.app");
+const socket = io("http://localhost:5000");
 function EditBlog() {
   const isCollapsed = useSelector((state: RootState) => state.app.isCollapsed);
   const [notiTitle, setNotiTitle] = useState<string>("");
@@ -47,9 +47,8 @@ function EditBlog() {
 
   return (
     <main
-      className={`${
-        isCollapsed ? "lg:w-[calc(100%-90px)]" : "lg:w-[calc(100%-200px)]"
-      } absolute w-full duration-300 flex flex-col gap-[20px] right-0 top-[56px] lg:top-[64px] bottom-0 h-fit p-[20px] lg:p-[40px]`}
+      className={`${isCollapsed ? "lg:w-[calc(100%-90px)]" : "lg:w-[calc(100%-200px)]"
+        } absolute w-full duration-300 flex flex-col gap-[20px] right-0 top-[56px] lg:top-[64px] bottom-0 h-fit p-[20px] lg:p-[40px]`}
     >
       <div className="w-full flex items-center justify-between">
         <h1 className=" relative md:text-[30px] md:leading-[45px] text-3xl  font-bold select-none">

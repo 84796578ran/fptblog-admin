@@ -12,7 +12,7 @@ function directToUnauthenticated(
       url.includes("/notification/create") ||
       url.includes("/members") ||
       url.includes("/profile") ||
-      url === "https://fpt-blog-admin.vercel.app/")
+      url === "http://localhost:3000/")
   );
 }
 
@@ -24,12 +24,12 @@ export default function middleware(
 
   if (directToUnauthenticated(verify, url)) {
     return NextResponse.redirect(
-      "https://fpt-blog-admin.vercel.app/auth/sign-in"
+      "http://localhost:3000/auth/sign-in"
     );
   }
 
   if (verify && url.includes("/auth")) {
-    return NextResponse.redirect("https://fpt-blog-admin.vercel.app/");
+    return NextResponse.redirect("http://localhost:3000/");
   }
 
   return NextResponse.next();
