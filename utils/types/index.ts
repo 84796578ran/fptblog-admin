@@ -6,6 +6,16 @@ export type UserInfo = {
   image: string;
   bio: string;
 };
+export type BlogInfo = {
+  blog_id: string;
+  user_id: string;
+  blog_title: string;
+  category_id: string;
+  content: string;
+  status: string;
+  created_at: string;
+  visual: string;
+};
 
 export type DataTypeAdmin = {
   key: React.Key;

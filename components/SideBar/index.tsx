@@ -3,7 +3,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { useRouter } from "next/navigation";
-import { BellOutlined, UserOutlined, HomeOutlined } from "@ant-design/icons";
+import { BellOutlined, UserOutlined, HomeOutlined, AppstoreOutlined, } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
 import { setCurrentPage } from "@/redux/slices/app";
@@ -37,6 +37,12 @@ function Sidebar(): JSX.Element {
     getItem("Notification", "sub1", <BellOutlined />, [
       getItem("View Notifications", "/notification/list/1"),
       getItem("Create Notification", "/notification/create"),
+    ]),
+    getItem("Blog", "sub3", <AppstoreOutlined />, [
+      getItem("Approved Blog", `/blog/approvedblog`),
+      getItem("Rejected Blog", `/blog/rejectedblog`),
+
+      
     ]),
 
     getItem("Members", "sub2", <UserOutlined />, [
