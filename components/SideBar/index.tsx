@@ -39,8 +39,8 @@ function Sidebar(): JSX.Element {
       getItem("Create Notification", "/notification/create"),
     ]),
     getItem("Blog", "sub3", <AppstoreOutlined />, [
-      getItem("Approved Blog", `/blog/approvedblog`),
-      getItem("Rejected Blog", `/blog/rejectedblog`),
+      getItem("List Blog", `/blog/allblog`),
+     
 
       
     ]),

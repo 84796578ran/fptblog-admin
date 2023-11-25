@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { Table, Space } from "antd";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import AdminModalContent from "@/components/AdminModal";
-import { getApprovedBlogs } from "@/apis/blog"; // Đảm bảo đường dẫn đúng
+import { getAllBlogs } from "@/apis/blog"; 
 import { formatDateDetail } from "@/utils/dateFormat";
 import { capitalizeFirstLetter } from "@/utils/hooks";
 
@@ -21,7 +21,7 @@ interface BlogInfo {
   created_at: string;
 }
 
-function ApprovedBlogsPage() {
+function AllBlogsPage() {
   const isCollapsed = useSelector((state: RootState) => state.app.isCollapsed);
   const [blogData, setBlogData] = useState<BlogInfo[]>();
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -33,15 +33,15 @@ function ApprovedBlogsPage() {
     setIsOpenDeleteModal(true);
   };
 
-  const handleGetApprovedBlogs = async () => {
+  const handleGetAllBlogs = async () => {
     try {
       const access_token = getCookie("accessToken");
       if (access_token) {
-        const response = await getApprovedBlogs(access_token);
-        const data = response.data;
+        const response = await getAllBlogs(access_token); 
+        const data = response.data.data;
         const formattedData = data.map((item: any) => ({
           key: item.blog_id,
-          blog_tile: item.blogTitle,
+          blogTitle: item.blog_title,
           user_id: item.user_id,
           category: item.category,
           status: capitalizeFirstLetter(item.status),
@@ -55,11 +55,6 @@ function ApprovedBlogsPage() {
       }
     }
   };
-
-  useEffect(() => {
-    handleGetApprovedBlogs();
-  }, []);
-
   const filteredData: BlogInfo[] | undefined = blogData?.filter((item) =>
     item.blog_title.toLowerCase().includes(searchQuery)
   );
@@ -140,4 +135,4 @@ function ApprovedBlogsPage() {
   );
 }
 
-export default ApprovedBlogsPage;
+export default AllBlogsPage;
