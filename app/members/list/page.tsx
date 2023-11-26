@@ -44,6 +44,7 @@ function MemberList() {
           description: item.bio ?? "No bio yet!",
         }));
         setUserData(formattedData);
+        console.log(formattedData)
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {

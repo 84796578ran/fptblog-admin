@@ -11,64 +11,48 @@ import AdminModalContent from "@/components/AdminModal";
 import { getAllBlogs } from "@/apis/blog"; 
 import { formatDateDetail } from "@/utils/dateFormat";
 import { capitalizeFirstLetter } from "@/utils/hooks";
+import { BlogColumn, BlogData, ColumnItem } from "@/utils/types";
 
-interface BlogInfo {
-  key: string;
-  blog_title: string;
-  user_id: string;
-  category: string;
-  status: string;
-  created_at: string;
-}
 
 function AllBlogsPage() {
   const isCollapsed = useSelector((state: RootState) => state.app.isCollapsed);
-  const [blogData, setBlogData] = useState<BlogInfo[]>();
+  const [blogData, setBlogData] = useState<BlogData[]>();
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [isOpenDeleteModal, setIsOpenDeleteModal] = useState<boolean>(false);
-  const [selectedBlog, setSelectedBlog] = useState<BlogInfo | null>();
-
-  const openDeleteModal = (record: BlogInfo) => {
-    setSelectedBlog(record);
-    setIsOpenDeleteModal(true);
-  };
-
+  
+  
   const handleGetAllBlogs = async () => {
     try {
       const access_token = getCookie("accessToken");
       if (access_token) {
         const response = await getAllBlogs(access_token); 
-        const data = response.data.data;
-        const formattedData = data.map((item: any) => ({
+    
+        const formattedData = response.data.map((item: BlogColumn) => ({
           key: item.blog_id,
           blogTitle: item.blog_title,
-          user_id: item.user_id,
+          author: item.author,
           category: item.category,
-          status: capitalizeFirstLetter(item.status),
+          status: item.status,
           created_at: formatDateDetail(item.created_at),
         }));
+        console.table(formattedData)
         setBlogData(formattedData);
+       
+        
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.log(error);
       }
     }
-  };
-  const filteredData: BlogInfo[] | undefined = blogData?.filter((item) =>
-    item.blog_title.toLowerCase().includes(searchQuery)
-  );
+  };useEffect(() => {
+    handleGetAllBlogs();
+    console.log(blogData);
 
-  const onChange: TableProps<BlogInfo>["onChange"] = (
-    pagination,
-    filters,
-    sorter,
-    extra
-  ) => {
-    console.log("params", pagination, filters, sorter, extra);
-  };
+  }, []);
 
-  const columns: ColumnsType<BlogInfo> = [
+
+
+  const columns: ColumnsType<BlogData> = [
     {
       title: "Blog Title",
       dataIndex: "blogTitle",
@@ -94,20 +78,7 @@ function AllBlogsPage() {
       dataIndex: "created_at",
       key: "created_at",
     },
-    {
-      title: "Action",
-      key: "action",
-      render: (_, record) => (
-        <Space size="middle">
-          <div
-            onClick={() => openDeleteModal(record)}
-            className="flex px-[12px] gap-[4px] items-center cursor-pointer hover:opacity-80 rounded-lg py-[8px] bg-red-600"
-          >
-            <div className="text-white text-xs">Delete</div>
-          </div>
-        </Space>
-      ),
-    },
+    
   ];
 
   return (
@@ -126,10 +97,9 @@ function AllBlogsPage() {
       </div>
       
       <Table
-        onChange={onChange}
         bordered={true}
         columns={columns}
-        dataSource={searchQuery ? filteredData : blogData}
+        dataSource={ blogData}
       ></Table>
     </main>
   );

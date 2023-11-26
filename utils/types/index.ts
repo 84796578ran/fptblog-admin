@@ -75,3 +75,23 @@ export type ProfileData = {
   image: string;
   created_at: string;
 };
+
+export type BlogData ={
+  key: React.Key;
+  blog_id: string;
+  blog_title: string;
+  author: string;
+  category: string;
+  status: number;
+  created_at: string;
+}
+
+export type BlogColumn ={
+  blog_id: string;
+  blog_title: string;
+  author: string;
+  category: string;
+  status: number;
+  created_at: string;
+}
+
